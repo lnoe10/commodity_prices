@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Commodity Price Trends</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --bg: #fafafa;
+      --card: #fff;
+      --text: #1a1a1a;
+      --muted: #666;
+      --border: #e5e5e5;
+      --accent: #2563eb;
+      --green: #16a34a;
+      --red: #dc2626;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      padding: 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    h1 { font-size: 1.75rem; font-weight: 600; margin-bottom: 0.5rem; }
+    .subtitle { color: var(--muted); margin-bottom: 2rem; }
+    .subtitle a { color: var(--accent); }
+    
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      align-items: flex-end;
+    }
+    .control-group { display: flex; flex-direction: column; gap: 0.25rem; }
+    .control-group label { font-size: 0.8rem; color: var(--muted); font-weight: 500; }
+    select, input {
+      padding: 0.5rem 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 0.9rem;
+      background: var(--card);
+    }
+    select { min-width: 180px; }
+    input[type="text"] { width: 200px; }
+    
+    .grid { display: grid; grid-template-columns: 1fr 320px; gap: 2rem; }
+    @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+    
+    .card {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .card h2 { font-size: 1rem; font-weight: 600; margin-bottom: 1rem; }
+    
+    .chart-container { height: 400px; }
+    
+    .movers-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+    .movers-table th { text-align: left; padding: 0.5rem 0; border-bottom: 1px solid var(--border); color: var(--muted); font-weight: 500; }
+    .movers-table td { padding: 0.5rem 0; border-bottom: 1px solid var(--border); }
+    .movers-table tr:last-child td { border-bottom: none; }
+    .movers-table .commodity { max-width: 140px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .positive { color: var(--green); font-weight: 500; }
+    .negative { color: var(--red); font-weight: 500; }
+    
+    .tabs { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+    .tab {
+      padding: 0.4rem 0.8rem;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      font-size: 0.85rem;
+      border-radius: 4px;
+      color: var(--muted);
+    }
+    .tab.active { background: var(--accent); color: white; }
+    
+    .loading { text-align: center; padding: 4rem; color: var(--muted); }
+    .error { text-align: center; padding: 2rem; color: var(--red); }
+    
+    footer { margin-top: 3rem; text-align: center; color: var(--muted); font-size: 0.8rem; }
+    footer a { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <h1>Commodity Price Trends</h1>
+  <p class="subtitle">
+    Data from <a href="https://www.worldbank.org/en/research/commodity-markets" target="_blank">World Bank Pink Sheet</a>
+    · Updated monthly
+  </p>
+  
+  <div class="controls">
+    <div class="control-group">
+      <label>Category</label>
+      <select id="category-select">
+        <option value="all">All Categories</option>
+      </select>
+    </div>
+    <div class="control-group">
+      <label>Commodity</label>
+      <select id="commodity-select">
+        <option value="">Select commodity...</option>
+      </select>
+    </div>
+    <div class="control-group">
+      <label>Time Range</label>
+      <select id="range-select">
+        <option value="12">1 Year</option>
+        <option value="60" selected>5 Years</option>
+        <option value="120">10 Years</option>
+        <option value="0">All Time</option>
+      </select>
+    </div>
+    <div class="control-group">
+      <label>Search</label>
+      <input type="text" id="search" placeholder="Filter commodities...">
+    </div>
+  </div>
+  
+  <div class="grid">
+    <div class="card">
+      <h2 id="chart-title">Select a commodity to view trends</h2>
+      <div class="chart-container">
+        <canvas id="chart"></canvas>
+      </div>
+    </div>
+    
+    <div class="card">
+      <h2>Biggest Movers</h2>
+      <div class="tabs">
+        <button class="tab active" data-period="1m">1 Month</button>
+        <button class="tab" data-period="12m">12 Month</button>
+        <button class="tab" data-period="zscore">Unusual</button>
+      </div>
+      <div id="movers-gainers">
+        <h3 style="font-size: 0.75rem; color: var(--muted); margin-bottom: 0.5rem;">↑ GAINERS</h3>
+        <table class="movers-table" id="gainers-table"></table>
+      </div>
+      <div id="movers-losers" style="margin-top: 1rem;">
+        <h3 style="font-size: 0.75rem; color: var(--muted); margin-bottom: 0.5rem;">↓ LOSERS</h3>
+        <table class="movers-table" id="losers-table"></table>
+      </div>
+    </div>
+  </div>
+  
+  <footer>
+    <p>Data source: World Bank Commodity Markets · <a href="https://www.worldbank.org/en/about/legal/terms-of-use-for-datasets">Terms of Use</a></p>
+  </footer>
+
+<script>
+let allData = [];
+let chart = null;
+let currentPeriod = '1m';
+let unitsLookup = {};
+
+async function init() {
+  try {
+    const response = await fetch('data/commodity_prices.json');
+    if (!response.ok) throw new Error('Data not found. Run prep_data.py first.');
+    allData = await response.json();
+    
+    // Build units lookup
+    allData.forEach(d => {
+      if (d.unit && !unitsLookup[d.commodity]) {
+        unitsLookup[d.commodity] = d.unit;
+      }
+    });
+    
+    populateFilters();
+    setupEventListeners();
+    updateMovers();
+    
+    // Select first commodity by default
+    const select = document.getElementById('commodity-select');
+    if (select.options.length > 1) {
+      select.selectedIndex = 1;
+      updateChart();
+    }
+  } catch (e) {
+    document.querySelector('.grid').innerHTML = `<div class="error">${e.message}</div>`;
+  }
+}
+
+function populateFilters() {
+  const categories = [...new Set(allData.map(d => d.category))].sort();
+  const categorySelect = document.getElementById('category-select');
+  categories.forEach(cat => {
+    const opt = document.createElement('option');
+    opt.value = cat;
+    opt.textContent = cat;
+    categorySelect.appendChild(opt);
+  });
+  
+  updateCommodityList();
+}
+
+function updateCommodityList() {
+  const category = document.getElementById('category-select').value;
+  const search = document.getElementById('search').value.toLowerCase();
+  
+  let commodities = [...new Set(allData.map(d => d.commodity))];
+  
+  if (category !== 'all') {
+    const catCommodities = new Set(allData.filter(d => d.category === category).map(d => d.commodity));
+    commodities = commodities.filter(c => catCommodities.has(c));
+  }
+  
+  if (search) {
+    commodities = commodities.filter(c => c.toLowerCase().includes(search));
+  }
+  
+  commodities.sort();
+  
+  const select = document.getElementById('commodity-select');
+  const current = select.value;
+  select.innerHTML = '<option value="">Select commodity...</option>';
+  commodities.forEach(c => {
+    const opt = document.createElement('option');
+    opt.value = c;
+    opt.textContent = c;
+    if (c === current) opt.selected = true;
+    select.appendChild(opt);
+  });
+}
+
+function setupEventListeners() {
+  document.getElementById('category-select').addEventListener('change', () => {
+    updateCommodityList();
+  });
+  
+  document.getElementById('commodity-select').addEventListener('change', updateChart);
+  document.getElementById('range-select').addEventListener('change', updateChart);
+  document.getElementById('search').addEventListener('input', updateCommodityList);
+  
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      currentPeriod = tab.dataset.period;
+      updateMovers();
+    });
+  });
+}
+
+function updateChart() {
+  const commodity = document.getElementById('commodity-select').value;
+  const months = parseInt(document.getElementById('range-select').value);
+  
+  if (!commodity) return;
+  
+  let data = allData.filter(d => d.commodity === commodity).sort((a, b) => a.date.localeCompare(b.date));
+  
+  if (months > 0) {
+    data = data.slice(-months);
+  }
+  
+  const labels = data.map(d => {
+    const date = new Date(d.date);
+    return date.toLocaleDateString('en-US', { month: 'short', year: '2-digit' });
+  });
+  const prices = data.map(d => d.price);
+  const unit = unitsLookup[commodity] || '';
+  
+  document.getElementById('chart-title').textContent = `${commodity} ${unit}`;
+  
+  if (chart) chart.destroy();
+  
+  const ctx = document.getElementById('chart').getContext('2d');
+  chart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [{
+        label: 'Price',
+        data: prices,
+        borderColor: '#2563eb',
+        backgroundColor: 'rgba(37, 99, 235, 0.1)',
+        fill: true,
+        tension: 0.2,
+        pointRadius: 0,
+        pointHoverRadius: 4
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { intersect: false, mode: 'index' },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: ctx => `$${ctx.parsed.y.toLocaleString()}`
+          }
+        }
+      },
+      scales: {
+        x: { grid: { display: false } },
+        y: {
+          grid: { color: '#f0f0f0' },
+          ticks: { callback: v => '$' + v.toLocaleString() }
+        }
+      }
+    }
+  });
+}
+
+function updateMovers() {
+  const isZscore = currentPeriod === 'zscore';
+  const pctField = currentPeriod === '1m' ? 'pct_1m' : currentPeriod === '12m' ? 'pct_12m' : 'zscore_1m';
+  
+  // Get latest data point for each commodity
+  const latestDate = allData.reduce((max, d) => d.date > max ? d.date : max, '');
+  let latest = allData.filter(d => d.date === latestDate);
+  
+  // For z-score, filter out nulls
+  if (isZscore) {
+    latest = latest.filter(d => d.zscore_1m != null);
+  }
+  
+  const sorted = [...latest].filter(d => d[pctField] != null).sort((a, b) => b[pctField] - a[pctField]);
+  
+  const gainers = sorted.slice(0, 5);
+  const losers = sorted.slice(-5).reverse();
+  
+  // Update labels based on mode
+  const upLabel = isZscore ? '↑ UNUSUALLY HIGH' : '↑ GAINERS';
+  const downLabel = isZscore ? '↓ UNUSUALLY LOW' : '↓ LOSERS';
+  document.querySelector('#movers-gainers h3').textContent = upLabel;
+  document.querySelector('#movers-losers h3').textContent = downLabel;
+  
+  renderMoversTable('gainers-table', gainers, pctField, isZscore);
+  renderMoversTable('losers-table', losers, pctField, isZscore);
+}
+
+function renderMoversTable(tableId, data, pctField, isZscore = false) {
+  const table = document.getElementById(tableId);
+  const header = isZscore ? 'Z-Score' : 'Change';
+  table.innerHTML = `
+    <thead><tr><th>Commodity</th><th style="text-align:right">${header}</th></tr></thead>
+    <tbody>
+      ${data.map(d => {
+        const value = d[pctField];
+        let displayValue;
+        if (isZscore) {
+          displayValue = (value >= 0 ? '+' : '') + value.toFixed(2) + 'σ';
+        } else {
+          displayValue = (value >= 0 ? '+' : '') + value.toFixed(1) + '%';
+        }
+        return `
+        <tr style="cursor:pointer" onclick="selectCommodity('${d.commodity}')" title="${isZscore ? d.pct_1m.toFixed(1) + '% this month' : ''}">
+          <td class="commodity" title="${d.commodity}">${d.commodity}</td>
+          <td style="text-align:right" class="${value >= 0 ? 'positive' : 'negative'}">
+            ${displayValue}
+          </td>
+        </tr>
+      `}).join('')}
+    </tbody>
+  `;
+}
+
+function selectCommodity(name) {
+  const select = document.getElementById('commodity-select');
+  select.value = name;
+  updateChart();
+}
+
+init();
+</script>
+</body>
+</html>
