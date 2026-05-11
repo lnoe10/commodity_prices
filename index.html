@@ -273,9 +273,13 @@ function updateChart() {
     data = data.slice(-months);
   }
   
+  const monthNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   const labels = data.map(d => {
-    const date = new Date(d.date);
-    return date.toLocaleDateString('en-US', { month: 'short', year: '2-digit' });
+    // Parse YYYY-MM-DD directly; `new Date('YYYY-MM-DD')` parses as UTC and
+    // renders one day earlier in any timezone west of UTC, off-by-one'ing
+    // every month label.
+    const [y, m] = d.date.split('-');
+    return `${monthNames[parseInt(m, 10) - 1]} ${y.slice(2)}`;
   });
   const prices = data.map(d => d.price);
   const unit = unitsLookup[commodity] || '';
