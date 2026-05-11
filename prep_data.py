@@ -11,13 +11,19 @@ Monthly prices Excel: CMO-Historical-Data-Monthly.xlsx
 
 import pandas as pd
 import json
+import re
 from pathlib import Path
 from datetime import datetime
 import requests
 
-# URLs for World Bank commodity data
-MONTHLY_DATA_URL = "https://thedocs.worldbank.org/en/doc/18675f1d1639c7a34d463f59263ba0a2-0050012025/related/CMO-Historical-Data-Monthly.xlsx"
-LOCAL_FILE = "CMO-Historical-Data-Monthly.xlsx"
+# The Pink Sheet landing page links to the current monthly xlsx. The URL embeds
+# a year-tied hash that rotates annually, so we discover it from the landing
+# page rather than hardcoding. FALLBACK_MONTHLY_DATA_URL is only used if
+# discovery fails — keep it updated to the latest known-good URL.
+LANDING_PAGE_URL = "https://www.worldbank.org/en/research/commodity-markets"
+FALLBACK_MONTHLY_DATA_URL = "https://thedocs.worldbank.org/en/doc/74e8be41ceb20fa0da750cda2f6b9e4e-0050012026/related/CMO-Historical-Data-Monthly.xlsx"
+MONTHLY_XLSX_FILENAME = "CMO-Historical-Data-Monthly.xlsx"
+LOCAL_FILE = MONTHLY_XLSX_FILENAME
 
 # Commodity categories based on World Bank classification
 CATEGORIES = {
@@ -82,8 +88,38 @@ def get_category(commodity_name):
     return "Other"
 
 
-def download_data(url=MONTHLY_DATA_URL, output_path=LOCAL_FILE):
+def discover_monthly_url(landing_page=LANDING_PAGE_URL):
+    """
+    Scrape the Pink Sheet landing page for the current monthly xlsx URL.
+
+    Returns the discovered URL, or FALLBACK_MONTHLY_DATA_URL if discovery
+    fails (e.g. landing page is down or its markup changed).
+    """
+    try:
+        response = requests.get(landing_page, timeout=30)
+        response.raise_for_status()
+        # Match any thedocs.worldbank.org URL ending in the monthly xlsx
+        # filename. Accept either quote style.
+        pattern = (
+            r"https://thedocs\.worldbank\.org/[^\s\"']*?"
+            + re.escape(MONTHLY_XLSX_FILENAME)
+        )
+        match = re.search(pattern, response.text)
+        if match:
+            url = match.group(0)
+            print(f"Discovered monthly data URL: {url}")
+            return url
+        print("Landing page fetched but xlsx link not found; using fallback.")
+    except requests.RequestException as e:
+        print(f"Could not fetch landing page ({e}); using fallback URL.")
+    print(f"Fallback URL: {FALLBACK_MONTHLY_DATA_URL}")
+    return FALLBACK_MONTHLY_DATA_URL
+
+
+def download_data(url=None, output_path=LOCAL_FILE):
     """Download the Excel file from World Bank."""
+    if url is None:
+        url = discover_monthly_url()
     print(f"Downloading data from {url}...")
     response = requests.get(url, timeout=60)
     response.raise_for_status()
@@ -250,32 +286,32 @@ def generate_summary(df):
     return summary
 
 
-def save_outputs(df, summary, output_dir='.'):
+def save_outputs(df, summary, output_dir='.', data_url=None):
     """Save transformed data to JSON and CSV."""
     output_dir = Path(output_dir)
-    
+
     # Full dataset as JSON (for dashboard)
     json_path = output_dir / 'commodity_prices.json'
     df.to_json(json_path, orient='records', date_format='iso')
     print(f"Saved full data to {json_path}")
-    
+
     # Summary as JSON
     summary_path = output_dir / 'summary.json'
     with open(summary_path, 'w') as f:
         json.dump(summary, f, indent=2, default=str)
     print(f"Saved summary to {summary_path}")
-    
+
     # Also save as CSV for inspection
     csv_path = output_dir / 'commodity_prices.csv'
     df.to_csv(csv_path, index=False)
     print(f"Saved CSV to {csv_path}")
-    
+
     # Metadata
     meta = {
         'generated_at': datetime.now().isoformat(),
         'source': 'World Bank Commodity Markets - Pink Sheet',
-        'source_url': 'https://www.worldbank.org/en/research/commodity-markets',
-        'data_url': MONTHLY_DATA_URL,
+        'source_url': LANDING_PAGE_URL,
+        'data_url': data_url or FALLBACK_MONTHLY_DATA_URL,
         'record_count': len(df),
         'commodity_count': df['commodity'].nunique(),
         'date_range': {
@@ -285,7 +321,7 @@ def save_outputs(df, summary, output_dir='.'):
         'categories': list(df['category'].unique()),
         'commodities': sorted(df['commodity'].unique().tolist())
     }
-    
+
     meta_path = output_dir / 'metadata.json'
     with open(meta_path, 'w') as f:
         json.dump(meta, f, indent=2, default=str)
@@ -296,16 +332,16 @@ def main():
     """Main pipeline."""
     output_dir = Path('data')
     output_dir.mkdir(exist_ok=True)
-    
-    # Download if not exists
-    if not Path(LOCAL_FILE).exists():
-        try:
-            download_data()
-        except Exception as e:
-            print(f"Could not download: {e}")
-            print(f"Please manually download from {MONTHLY_DATA_URL}")
-            print(f"and save as {LOCAL_FILE}")
-            return
+
+    # Always re-discover and download. The xlsx is small (~500KB) and a stale
+    # local copy would silently produce stale outputs on the next run.
+    url = discover_monthly_url()
+    try:
+        download_data(url=url)
+    except Exception as e:
+        print(f"Could not download: {e}")
+        print(f"See {LANDING_PAGE_URL} for the current xlsx link.")
+        raise
     
     # Transform
     df = load_and_transform()
@@ -317,7 +353,7 @@ def main():
     summary = generate_summary(df)
     
     # Save outputs
-    save_outputs(df, summary, output_dir)
+    save_outputs(df, summary, output_dir, data_url=url)
     
     print("\nDone! Output files in ./data/")
     print(f"  - commodity_prices.json ({len(df)} records)")
