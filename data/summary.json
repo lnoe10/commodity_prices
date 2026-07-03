@@ -1,395 +1,395 @@
 {
-  "latest_date": "2026-05-01",
+  "latest_date": "2026-06-01",
   "biggest_gainers_1m": [
-    {
-      "commodity": "Tea, Kolkata",
-      "category": "Beverages",
-      "price": 3.19,
-      "pct_1m": 34.6
-    },
-    {
-      "commodity": "Cocoa",
-      "category": "Beverages",
-      "price": 4.16,
-      "pct_1m": 22.35
-    },
-    {
-      "commodity": "Tin",
-      "category": "Metals",
-      "price": 53562.79,
-      "pct_1m": 9.75
-    },
-    {
-      "commodity": "Rapeseed oil",
-      "category": "Oils & Meals",
-      "price": 1472.53,
-      "pct_1m": 9.51
-    },
     {
       "commodity": "Rice, Thai 5%",
       "category": "Grains",
-      "price": 440.0,
-      "pct_1m": 9.18
+      "price": 494.0,
+      "pct_1m": 12.27
     },
     {
       "commodity": "Rice, Thai A.1",
       "category": "Grains",
-      "price": 420.19,
-      "pct_1m": 9.08
+      "price": 469.4,
+      "pct_1m": 11.71
     },
     {
       "commodity": "Rice, Thai 25%",
       "category": "Grains",
-      "price": 435.0,
-      "pct_1m": 9.02
+      "price": 479.0,
+      "pct_1m": 10.11
     },
     {
-      "commodity": "TSP",
-      "category": "Fertilizers",
-      "price": 713.5,
-      "pct_1m": 8.41
-    },
-    {
-      "commodity": "Soybean oil",
-      "category": "Oils & Meals",
-      "price": 1775.26,
-      "pct_1m": 8.02
-    },
-    {
-      "commodity": "Wheat, US HRW",
-      "category": "Grains",
-      "price": 303.0,
-      "pct_1m": 7.45
-    }
-  ],
-  "biggest_losers_1m": [
-    {
-      "commodity": "Crude oil, Brent",
+      "commodity": "Natural gas, US",
       "category": "Energy",
-      "price": 107.54,
-      "pct_1m": -10.7
+      "price": 3.1,
+      "pct_1m": 6.9
     },
     {
-      "commodity": "Urea",
-      "category": "Fertilizers",
-      "price": 770.5,
-      "pct_1m": -10.08
+      "commodity": "Rubber, RSS3",
+      "category": "Raw Materials",
+      "price": 2.86,
+      "pct_1m": 6.32
     },
     {
-      "commodity": "Palm kernel oil",
+      "commodity": "Cocoa",
+      "category": "Beverages",
+      "price": 4.4,
+      "pct_1m": 5.77
+    },
+    {
+      "commodity": "Banana, US",
+      "category": "Other Food",
+      "price": 1.18,
+      "pct_1m": 5.36
+    },
+    {
+      "commodity": "Fish meal",
       "category": "Oils & Meals",
-      "price": 2416.34,
-      "pct_1m": -7.3
+      "price": 2145.0,
+      "pct_1m": 4.89
     },
     {
       "commodity": "Tea, Mombasa",
       "category": "Beverages",
-      "price": 2.18,
-      "pct_1m": -6.03
+      "price": 2.27,
+      "pct_1m": 4.13
     },
     {
-      "commodity": "Coffee, Arabica",
-      "category": "Beverages",
-      "price": 6.95,
-      "pct_1m": -4.79
+      "commodity": "Rice, Viet Namese 5%",
+      "category": "Grains",
+      "price": 391.3,
+      "pct_1m": 3.99
+    }
+  ],
+  "biggest_losers_1m": [
+    {
+      "commodity": "Urea",
+      "category": "Fertilizers",
+      "price": 453.1,
+      "pct_1m": -41.19
     },
     {
-      "commodity": "Coconut oil",
-      "category": "Oils & Meals",
-      "price": 2244.0,
-      "pct_1m": -3.75
-    },
-    {
-      "commodity": "Groundnut oil **",
-      "category": "Oils & Meals",
-      "price": 1836.75,
-      "pct_1m": -3.65
+      "commodity": "Crude oil, Brent",
+      "category": "Energy",
+      "price": 85.4,
+      "pct_1m": -20.56
     },
     {
       "commodity": "Crude oil, average",
       "category": "Energy",
-      "price": 100.43,
-      "pct_1m": -3.35
+      "price": 81.7,
+      "pct_1m": -18.63
     },
     {
-      "commodity": "Beef **",
-      "category": "Other Food",
-      "price": 7.95,
-      "pct_1m": -3.17
+      "commodity": "Crude oil, Dubai",
+      "category": "Energy",
+      "price": 77.7,
+      "pct_1m": -17.95
+    },
+    {
+      "commodity": "Crude oil, WTI",
+      "category": "Energy",
+      "price": 81.9,
+      "pct_1m": -17.36
+    },
+    {
+      "commodity": "Silver",
+      "category": "Precious Metals",
+      "price": 66.7,
+      "pct_1m": -14.49
+    },
+    {
+      "commodity": "Platinum",
+      "category": "Precious Metals",
+      "price": 1726.0,
+      "pct_1m": -13.61
     },
     {
       "commodity": "Orange",
       "category": "Other Food",
-      "price": 0.92,
-      "pct_1m": -3.16
+      "price": 0.82,
+      "pct_1m": -10.87
+    },
+    {
+      "commodity": "Palm kernel oil",
+      "category": "Oils & Meals",
+      "price": 2163.0,
+      "pct_1m": -10.47
+    },
+    {
+      "commodity": "Coconut oil",
+      "category": "Oils & Meals",
+      "price": 1979.0,
+      "pct_1m": -8.89
     }
   ],
   "biggest_gainers_12m": [
     {
       "commodity": "Silver",
       "category": "Precious Metals",
-      "price": 78.01,
-      "pct_12m": 138.13
-    },
-    {
-      "commodity": "Platinum",
-      "category": "Precious Metals",
-      "price": 1998.39,
-      "pct_12m": 104.02
-    },
-    {
-      "commodity": "Urea",
-      "category": "Fertilizers",
-      "price": 770.5,
-      "pct_12m": 96.56
-    },
-    {
-      "commodity": "Crude oil, Brent",
-      "category": "Energy",
-      "price": 107.54,
-      "pct_12m": 67.48
+      "price": 66.7,
+      "pct_12m": 85.28
     },
     {
       "commodity": "Tin",
       "category": "Metals",
-      "price": 53562.79,
-      "pct_12m": 67.48
-    },
-    {
-      "commodity": "Crude oil, WTI",
-      "category": "Energy",
-      "price": 99.09,
-      "pct_12m": 62.36
-    },
-    {
-      "commodity": "Crude oil, average",
-      "category": "Energy",
-      "price": 100.43,
-      "pct_12m": 60.05
+      "price": 53037.0,
+      "pct_12m": 62.97
     },
     {
       "commodity": "Soybean oil",
       "category": "Oils & Meals",
-      "price": 1775.26,
-      "pct_12m": 52.64
+      "price": 1765.0,
+      "pct_12m": 49.83
     },
     {
-      "commodity": "Crude oil, Dubai",
-      "category": "Energy",
-      "price": 94.67,
-      "pct_12m": 50.25
+      "commodity": "Rubber, TSR20 **",
+      "category": "Raw Materials",
+      "price": 2.25,
+      "pct_12m": 39.75
+    },
+    {
+      "commodity": "Platinum",
+      "category": "Precious Metals",
+      "price": 1726.0,
+      "pct_12m": 37.97
+    },
+    {
+      "commodity": "Copper",
+      "category": "Metals",
+      "price": 13552.0,
+      "pct_12m": 37.79
     },
     {
       "commodity": "Aluminum",
       "category": "Metals",
-      "price": 3666.1,
-      "pct_12m": 49.71
+      "price": 3439.0,
+      "pct_12m": 36.14
+    },
+    {
+      "commodity": "Zinc",
+      "category": "Metals",
+      "price": 3539.0,
+      "pct_12m": 33.3
+    },
+    {
+      "commodity": "Rubber, RSS3",
+      "category": "Raw Materials",
+      "price": 2.86,
+      "pct_12m": 32.41
+    },
+    {
+      "commodity": "Banana, US",
+      "category": "Other Food",
+      "price": 1.18,
+      "pct_12m": 28.26
     }
   ],
   "biggest_losers_12m": [
     {
       "commodity": "Cocoa",
       "category": "Beverages",
-      "price": 4.16,
-      "pct_12m": -53.73
+      "price": 4.4,
+      "pct_12m": -47.62
     },
     {
       "commodity": "Orange",
       "category": "Other Food",
-      "price": 0.92,
-      "pct_12m": -33.33
+      "price": 0.82,
+      "pct_12m": -39.71
     },
     {
-      "commodity": "Coffee, Robusta",
-      "category": "Beverages",
-      "price": 3.67,
-      "pct_12m": -29.96
+      "commodity": "Coconut oil",
+      "category": "Oils & Meals",
+      "price": 1979.0,
+      "pct_12m": -26.68
     },
     {
       "commodity": "Coffee, Arabica",
       "category": "Beverages",
-      "price": 6.95,
-      "pct_12m": -20.75
+      "price": 6.79,
+      "pct_12m": -15.23
     },
     {
-      "commodity": "Coconut oil",
-      "category": "Oils & Meals",
-      "price": 2244.0,
-      "pct_12m": -18.9
+      "commodity": "Coffee, Robusta",
+      "category": "Beverages",
+      "price": 3.73,
+      "pct_12m": -13.86
     },
     {
       "commodity": "Sugar, world",
       "category": "Other Food",
-      "price": 0.34,
-      "pct_12m": -12.82
-    },
-    {
-      "commodity": "Logs, Malaysian",
-      "category": "Raw Materials",
-      "price": 188.28,
-      "pct_12m": -8.48
+      "price": 0.32,
+      "pct_12m": -13.51
     },
     {
       "commodity": "Plywood",
       "category": "Raw Materials",
-      "price": 345.34,
-      "pct_12m": -8.48
+      "price": 339.8,
+      "pct_12m": -10.06
     },
     {
-      "commodity": "Natural gas, US",
-      "category": "Energy",
-      "price": 2.93,
-      "pct_12m": -6.09
+      "commodity": "Logs, Malaysian",
+      "category": "Raw Materials",
+      "price": 185.3,
+      "pct_12m": -10.05
     },
     {
       "commodity": "Tea, Colombo",
       "category": "Beverages",
-      "price": 3.68,
-      "pct_12m": -5.4
+      "price": 3.5,
+      "pct_12m": -6.42
+    },
+    {
+      "commodity": "Banana, Europe",
+      "category": "Other Food",
+      "price": 1.11,
+      "pct_12m": -4.31
     }
   ],
   "most_unusual_up": [
     {
-      "commodity": "Rice, Viet Namese 5%",
+      "commodity": "Rice, Thai A.1",
       "category": "Grains",
-      "price": 376.33,
-      "pct_1m": 6.65,
-      "zscore_1m": 4.92
+      "price": 469.4,
+      "pct_1m": 11.71,
+      "zscore_1m": 1.76
     },
     {
-      "commodity": "Rapeseed oil",
-      "category": "Oils & Meals",
-      "price": 1472.53,
-      "pct_1m": 9.51,
-      "zscore_1m": 3.38
-    },
-    {
-      "commodity": "Tea, Kolkata",
-      "category": "Beverages",
-      "price": 3.19,
-      "pct_1m": 34.6,
-      "zscore_1m": 3.36
-    },
-    {
-      "commodity": "Cocoa",
-      "category": "Beverages",
-      "price": 4.16,
-      "pct_1m": 22.35,
-      "zscore_1m": 2.73
-    },
-    {
-      "commodity": "Sugar, world",
-      "category": "Other Food",
-      "price": 0.34,
-      "pct_1m": 6.25,
-      "zscore_1m": 2.37
-    },
-    {
-      "commodity": "Tea, avg 3 auctions",
-      "category": "Beverages",
-      "price": 3.02,
-      "pct_1m": 6.71,
-      "zscore_1m": 2.26
+      "commodity": "Rice, Thai 5%",
+      "category": "Grains",
+      "price": 494.0,
+      "pct_1m": 12.27,
+      "zscore_1m": 1.74
     },
     {
       "commodity": "Fish meal",
       "category": "Oils & Meals",
-      "price": 2044.75,
-      "pct_1m": 5.06,
-      "zscore_1m": 2.16
+      "price": 2145.0,
+      "pct_1m": 4.89,
+      "zscore_1m": 1.64
     },
     {
-      "commodity": "Wheat, US HRW",
+      "commodity": "Rice, Viet Namese 5%",
       "category": "Grains",
-      "price": 303.0,
-      "pct_1m": 7.45,
-      "zscore_1m": 1.78
+      "price": 391.3,
+      "pct_1m": 3.99,
+      "zscore_1m": 1.58
     },
     {
-      "commodity": "Rubber, TSR20 **",
+      "commodity": "Rice, Thai 25%",
+      "category": "Grains",
+      "price": 479.0,
+      "pct_1m": 10.11,
+      "zscore_1m": 1.48
+    },
+    {
+      "commodity": "Rubber, RSS3",
       "category": "Raw Materials",
-      "price": 2.21,
-      "pct_1m": 7.28,
-      "zscore_1m": 1.73
+      "price": 2.86,
+      "pct_1m": 6.32,
+      "zscore_1m": 1.12
     },
     {
-      "commodity": "Chicken **",
-      "category": "Other Food",
-      "price": 1.86,
-      "pct_1m": 6.29,
-      "zscore_1m": 1.61
-    }
-  ],
-  "most_unusual_down": [
-    {
-      "commodity": "Beef **",
-      "category": "Other Food",
-      "price": 7.95,
-      "pct_1m": -3.17,
-      "zscore_1m": -1.75
+      "commodity": "Cocoa",
+      "category": "Beverages",
+      "price": 4.4,
+      "pct_1m": 5.77,
+      "zscore_1m": 0.89
     },
     {
       "commodity": "Tea, Mombasa",
       "category": "Beverages",
-      "price": 2.18,
-      "pct_1m": -6.03,
-      "zscore_1m": -1.6
+      "price": 2.27,
+      "pct_1m": 4.13,
+      "zscore_1m": 0.82
     },
     {
-      "commodity": "Gold",
-      "category": "Precious Metals",
-      "price": 4587.21,
-      "pct_1m": -2.84,
-      "zscore_1m": -1.29
+      "commodity": "Banana, US",
+      "category": "Other Food",
+      "price": 1.18,
+      "pct_1m": 5.36,
+      "zscore_1m": 0.73
     },
     {
-      "commodity": "Palm kernel oil",
-      "category": "Oils & Meals",
-      "price": 2416.34,
-      "pct_1m": -7.3,
-      "zscore_1m": -1.22
-    },
-    {
-      "commodity": "Crude oil, Brent",
+      "commodity": "Coal, South African **",
       "category": "Energy",
-      "price": 107.54,
-      "pct_1m": -10.7,
-      "zscore_1m": -1.14
-    },
+      "price": 96.3,
+      "pct_1m": 0.73,
+      "zscore_1m": 0.56
+    }
+  ],
+  "most_unusual_down": [
     {
-      "commodity": "Tea, Colombo",
-      "category": "Beverages",
-      "price": 3.68,
-      "pct_1m": -3.16,
-      "zscore_1m": -1.07
+      "commodity": "Maize",
+      "category": "Grains",
+      "price": 197.1,
+      "pct_1m": -8.83,
+      "zscore_1m": -3.35
     },
     {
       "commodity": "Urea",
       "category": "Fertilizers",
-      "price": 770.5,
-      "pct_1m": -10.08,
-      "zscore_1m": -1.03
+      "price": 453.1,
+      "pct_1m": -41.19,
+      "zscore_1m": -2.65
     },
     {
-      "commodity": "Groundnut oil **",
-      "category": "Oils & Meals",
-      "price": 1836.75,
-      "pct_1m": -3.65,
-      "zscore_1m": -0.91
+      "commodity": "Aluminum",
+      "category": "Metals",
+      "price": 3439.0,
+      "pct_1m": -6.19,
+      "zscore_1m": -2.59
     },
     {
-      "commodity": "Platinum",
+      "commodity": "Beef **",
+      "category": "Other Food",
+      "price": 7.46,
+      "pct_1m": -6.16,
+      "zscore_1m": -2.56
+    },
+    {
+      "commodity": "Wheat, US SRW",
+      "category": "Grains",
+      "price": 237.5,
+      "pct_1m": -8.48,
+      "zscore_1m": -2.29
+    },
+    {
+      "commodity": "Iron ore, cfr spot",
+      "category": "Metals",
+      "price": 100.8,
+      "pct_1m": -7.18,
+      "zscore_1m": -2.24
+    },
+    {
+      "commodity": "Wheat, US HRW",
+      "category": "Grains",
+      "price": 286.0,
+      "pct_1m": -5.61,
+      "zscore_1m": -2.24
+    },
+    {
+      "commodity": "Crude oil, Dubai",
+      "category": "Energy",
+      "price": 77.7,
+      "pct_1m": -17.95,
+      "zscore_1m": -2.11
+    },
+    {
+      "commodity": "Gold",
       "category": "Precious Metals",
-      "price": 1998.39,
-      "pct_1m": -1.44,
-      "zscore_1m": -0.65
+      "price": 4228.0,
+      "pct_1m": -7.83,
+      "zscore_1m": -2.08
     },
     {
-      "commodity": "Coconut oil",
-      "category": "Oils & Meals",
-      "price": 2244.0,
-      "pct_1m": -3.75,
-      "zscore_1m": -0.64
+      "commodity": "Cotton, A Index",
+      "category": "Raw Materials",
+      "price": 1.9,
+      "pct_1m": -6.4,
+      "zscore_1m": -1.89
     }
   ]
 }

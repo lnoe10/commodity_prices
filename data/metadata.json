@@ -1,13 +1,13 @@
 {
-  "generated_at": "2026-06-03T16:24:40.997286",
+  "generated_at": "2026-07-03T13:49:07.657205",
   "source": "World Bank Commodity Markets - Pink Sheet",
   "source_url": "https://www.worldbank.org/en/research/commodity-markets",
   "data_url": "https://thedocs.worldbank.org/en/doc/74e8be41ceb20fa0da750cda2f6b9e4e-0050012026/related/CMO-Historical-Data-Monthly.xlsx",
-  "record_count": 50167,
+  "record_count": 50235,
   "commodity_count": 71,
   "date_range": {
     "start": "1960-01-01",
-    "end": "2026-05-01"
+    "end": "2026-06-01"
   },
   "categories": [
     "Metals",
